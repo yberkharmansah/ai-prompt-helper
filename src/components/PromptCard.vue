@@ -2,14 +2,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <div class="container py-4">
 
-    <!-- Yeni Prompt Oluştur Butonu -->
     <div class="mb-4 d-flex justify-content-end">
       <button type="button" class="btn btn-primary" @click="showCreateModal = true">
         Yeni Prompt Oluştur
       </button>
     </div>
 
-    <!-- Kategori seçimi -->
     <div v-if="!selectedCategory">
       <h2>Kategori Seçin</h2>
       <ul class="list-group">
@@ -25,7 +23,6 @@
       </ul>
     </div>
 
-    <!-- Seçilen kategori ve promptlar -->
     <div v-else>
       <button type="button" class="btn btn-link mb-3" @click="selectedCategory = null">← Kategorilere Dön</button>
       <h2>{{ selectedCategory }} Prompts</h2>
@@ -43,13 +40,12 @@
             class="btn btn-outline-warning btn-sm"
             @click="toggleFavorite(prompt)"
           >
-            {{ isFavorite(prompt.id) ? '★' : '☆' }}
+            {{ isFavorite(prompt.firebaseId || prompt.id) ? '★' : '☆' }}
           </button>
         </li>
       </ul>
     </div>
 
-    <!-- Prompt Düzenleme Modal -->
     <div v-if="showModal" class="modal fade show d-block" tabindex="-1" @click.self="closeModal">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -70,18 +66,16 @@
               />
             </div>
 
-            <p><strong>Generated Prompt:</strong></p>
+            <p><strong>Oluşturulan Prompt:</strong></p>
             <pre class="bg-light p-3 rounded" style="white-space: pre-wrap;">{{ generatedPrompt }}</pre>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" @click="saveUserPrompt">Kaydet</button>
-            <button type="button" class="btn btn-secondary" @click="closeModal">Kapat</button>
+            <button type="button" class="btn btn-success" @click="savePersonalPrompt">Kaydet (Kişisel)</button> <button type="button" class="btn btn-secondary" @click="closeModal">Kapat</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Yeni Prompt Oluşturma Modal -->
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="showCreateModal = false">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-4">
@@ -108,8 +102,7 @@
             ></textarea>
           </div>
           <div class="d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-primary" @click="createNewPrompt">Oluştur</button>
-            <button type="button" class="btn btn-secondary" @click="showCreateModal = false">İptal</button>
+            <button type="button" class="btn btn-primary" @click="createAndSaveNewUserPrompt">Oluştur</button> <button type="button" class="btn btn-secondary" @click="showCreateModal = false">İptal</button>
           </div>
         </div>
       </div>
@@ -119,14 +112,14 @@
 </template>
 
 <script>
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore"; // addDoc yerine getDocs
 import { db } from "../firebase";
 import { useUserStore } from "../stores/user";
 
 export default {
   data() {
     return {
-      prompts: [],
+      prompts: [], // Veritabanından çekilen tüm prompt'lar (prompts.json ve Firestore'daki "prompts" koleksiyonu)
       selectedCategory: null,
       showModal: false,
       showCreateModal: false,
@@ -139,11 +132,15 @@ export default {
   },
   computed: {
     categories() {
-      return [...new Set(this.prompts.map(p => p.category))];
+      // Hem data/prompts.json'dan gelenler hem de kullanıcının oluşturduğu prompt'lardan kategorileri çek
+      const allPrompts = [...this.prompts, ...this.userStore.userPrompts];
+      return [...new Set(allPrompts.map(p => p.category))];
     },
     filteredPrompts() {
       if (!this.selectedCategory) return [];
-      return this.prompts.filter(p => p.category === this.selectedCategory);
+      // Hem data/prompts.json'dan gelenleri hem de kullanıcının oluşturduğu prompt'ları filtrele
+      const allPrompts = [...this.prompts, ...this.userStore.userPrompts];
+      return allPrompts.filter(p => p.category === this.selectedCategory);
     },
     promptFields() {
       if (!this.activePrompt) return [];
@@ -179,67 +176,92 @@ export default {
       this.activePrompt = null;
       this.userInputs = {};
     },
-    async createNewPrompt() {
+    // Kullanıcının yeni public prompt oluşturması ve Pinia store üzerinden kaydetmesi
+    async createAndSaveNewUserPrompt() {
+      if (!this.userStore.user) { // Kullanıcının giriş yapıp yapmadığını kontrol et
+        alert("Lütfen giriş yapınız. Yeni prompt oluşturmak için oturum açmalısınız.");
+        return;
+      }
       if (!this.newPromptCategory.trim() || !this.newPromptText.trim()) {
         alert("Kategori ve prompt metni boş olamaz.");
         return;
       }
-      const newPrompt = {
+      const newPromptData = {
         category: this.newPromptCategory.trim(),
         prompt: this.newPromptText.trim(),
-        timestamp: Date.now()
+        // timestamp gibi ek veriler Pinia store içinde eklenecek
       };
       try {
-        const docRef = await addDoc(collection(db, "prompts"), newPrompt);
-        this.prompts.push({ ...newPrompt, id: docRef.id });  // id Firestore doküman id'si, string
+        await this.userStore.addNewUserPrompt(newPromptData); // Pinia store aksiyonunu çağır
         this.newPromptCategory = "";
         this.newPromptText = "";
         this.showCreateModal = false;
-        alert("Yeni prompt oluşturuldu!");
+        alert("Yeni prompt başarıyla oluşturuldu!");
       } catch (error) {
-        console.error("Prompt eklenemedi:", error);
-        alert("Bir hata oluştu.");
+        console.error("Prompt oluşturulurken hata oluştu:", error);
+        alert("Prompt oluşturulurken bir hata oluştu.");
       }
     },
     isFavorite(promptId) {
       return this.userStore.favorites.some(fav => fav.id === promptId);
     },
     async toggleFavorite(prompt) {
-      const promptId = prompt.firebaseId;  // Firestore doc ID string
+      // firebaseId yoksa id'yi kullan (json'dan gelenler için)
+      const promptId = prompt.firebaseId || prompt.id; 
 
-  if (!promptId) {
-    console.error("Prompt id eksik!", prompt);
-    return;
-  }
-  if (this.isFavorite(promptId)) {
-    await this.userStore.removeFavorite(promptId);
-  } else {
-    await this.userStore.addFavorite(prompt);  // prompt içinde firebaseId olsun
-  }
-    },
-    async saveUserPrompt() {
-      if (!this.userStore.user) {
-        alert("Lütfen giriş yapınız.");
+      if (!promptId) {
+        console.error("Favori eklenirken/kaldırılırken prompt id eksik!", prompt);
         return;
       }
-      const promptToSave = {
-        id: this.activePrompt.id,
-        category: this.activePrompt.category,
-        prompt: this.generatedPrompt,
-        variables: { ...this.userInputs }
-      };
-      await this.userStore.addUserPrompt(promptToSave);
-      alert("Prompt kaydedildi!");
-      this.closeModal();
+      if (this.isFavorite(promptId)) {
+        await this.userStore.removeFavorite(promptId);
+      } else {
+        // Favoriye eklerken prompt objesini firebaseId ile birlikte gönderelim
+        await this.userStore.addFavorite({ ...prompt, firebaseId: promptId });
+      }
     },
-    async fetchPromptsFromFirestore() {
+    // Kullanıcının modalda doldurduğu prompt'u kişisel olarak kaydetmesi (YENİ METOT)
+    async savePersonalPrompt() {
+      if (!this.userStore.user) {
+        alert("Lütfen giriş yapınız. Prompt kaydetmek için oturum açmalısınız.");
+        return;
+      }
+      
+      const finalPromptContent = this.generatedPrompt;
+      const originalCategory = this.activePrompt ? this.activePrompt.category : "Genel"; // Orijinal prompt'un kategorisini de alabiliriz
+
       try {
-        const snapshot = await getDocs(collection(db, "prompts"));
-        this.prompts = snapshot.docs.map(doc => ({
-  firebaseId: doc.id,  // Firestore ID
-  ...doc.data()
-}));
-        console.log("Promptlar yüklendi:", this.prompts);
+        await this.userStore.addPersonalSavedPrompt(finalPromptContent, originalCategory);
+        alert("Kişisel prompt başarıyla kaydedildi!");
+        this.closeModal();
+      } catch (error) {
+        console.error("Kişisel prompt kaydedilirken hata oluştu:", error);
+        alert("Kişisel prompt kaydedilirken bir hata oluştu.");
+      }
+    },
+    async fetchPromptsFromFirestoreAndJson() {
+      try {
+        // data/prompts.json dosyasını yükle
+        const jsonData = await import('../data/prompts.json'); //
+        const jsonPrompts = jsonData.default.map(p => ({
+          ...p,
+          source: 'json' // Kaynağını belirtmek için
+        }));
+
+        // Firebase'deki "prompts" koleksiyonundan verileri çek (varsa)
+        const firestoreSnapshot = await getDocs(collection(db, "prompts"));
+        const firestorePrompts = firestoreSnapshot.docs.map(doc => ({
+          firebaseId: doc.id, // Firestore doküman ID'si
+          ...doc.data(),
+          source: 'firestore' // Kaynağını belirtmek için
+        }));
+
+        // Eğer kullanıcının oluşturduğu prompt'ları da burada göstermek istiyorsak,
+        // userStore.userPrompts'ı da buraya ekleyebiliriz. Ancak, mevcut filteredPrompts
+        // computed'ı userStore.userPrompts'ı zaten içeriyor.
+        this.prompts = [...jsonPrompts, ...firestorePrompts];
+        
+        console.log("Tüm promptlar yüklendi:", this.prompts);
       } catch (error) {
         console.error("Prompts çekilemedi:", error);
       }
@@ -247,7 +269,7 @@ export default {
   },
   async mounted() {
     this.userStore.init();
-    await this.fetchPromptsFromFirestore();
+    await this.fetchPromptsFromFirestoreAndJson();
   }
 };
 </script>
