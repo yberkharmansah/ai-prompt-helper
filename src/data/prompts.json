@@ -1,0 +1,229 @@
+[
+{
+  "id": 1,
+  "category": "AI Art",
+  "prompt": "Create a digital painting of a sunset. Make sure the scene is set in a [scene/setting]. The sun should be [position of sun], casting [type of shadows]. The colors should be dominated by [primary colors]. The sky should have [sky elements], and the sun should be [specific sun characteristics]. The scene should feel [desired mood], with [additional details]."
+},
+{
+  "id": 2,
+  "category": "AI Art",
+  "prompt": "Generate a futuristic city skyline at night. The buildings should be [building features], with lights in shades of [light colors]. The skyline should have [sky characteristics]. The scene should feature [additional futuristic elements], like [specific objects], creating a [desired atmosphere]. The perspective should be [camera angle/perspective], overlooking the city."
+},
+{
+  "id": 3,
+  "category": "AI Art",
+  "prompt": "Create an abstract painting inspired by the concept of time. The painting should have [type of shapes or forms], representing the passage of time. Use a color palette dominated by [primary colors], with accents of [accent colors] to represent [specific concept]. The texture should be [texture type], creating a [specific feel] to the artwork."
+},
+{
+  "id": 13,
+  "category": "AI Art",
+  "prompt": "Design a mystical forest scene filled with [fantasy elements]. Use a color scheme dominated by [color tones]. The lighting should highlight [key features], creating a [mood] atmosphere. Include [wildlife or magical creatures] interacting with the environment."
+},
+{
+  "id": 14,
+  "category": "AI Art",
+  "prompt": "Generate a portrait of a [character type] with [distinctive features]. The style should be [art style], focusing on [facial expressions or emotions]. Use a background that complements the character’s personality with [background details]."
+},
+{
+  "id": 4,
+  "category": "Creative Writing",
+  "prompt": "Write a short story about a time traveler who visits [location]. The protagonist should be a [character description], who accidentally activates [time travel device]. Describe the sights, sounds, and smells of [location] in vivid detail. The protagonist must [main challenge], using [skills/knowledge]. The story should explore themes of [themes], with [story structure or mood]."
+},
+{
+  "id": 5,
+  "category": "Creative Writing",
+  "prompt": "Write a poem about the beauty of the ocean at night. Begin by describing [ocean characteristics] reflecting the [sky characteristics]. Include imagery of [nature elements] that evoke [specific mood]. As the poem progresses, explore the deeper aspects of the ocean—its [features] and its [mysterious aspects]. Use [poem structure] to evoke the [desired feeling] of the ocean at night."
+},
+{
+  "id": 15,
+  "category": "Creative Writing",
+  "prompt": "Craft a dialogue between two characters with opposing views on [controversial topic]. Use [tone] to highlight their emotions and motivations. Include descriptive actions and settings to enhance the conversation."
+},
+{
+  "id": 16,
+  "category": "Creative Writing",
+  "prompt": "Write a suspenseful scene set in [location]. The protagonist, a [character description], must overcome [conflict]. Use sensory details to build tension and create a vivid atmosphere."
+},
+{
+  "id": 17,
+  "category": "Creative Writing",
+  "prompt": "Compose a descriptive passage that captures the essence of [season or event]. Focus on sensory details like sight, sound, smell, touch, and taste. Use [literary devices] to enrich the description."
+},
+{
+  "id": 6,
+  "category": "Marketing",
+  "prompt": "Write an email marketing campaign for a new [product type]. The product should be [product features]. In the email, emphasize how the product is [key selling point]. The tone should be [tone of email], targeting [specific audience]. Include a section that explains [product details] and how it benefits the customer. Offer a [promotion or discount] for early buyers, and include [testimonials or additional content]."
+},
+{
+  "id": 7,
+  "category": "Marketing",
+  "prompt": "Create a social media post for the release of a new [product]. The post should highlight [product features]. Use [visual style], with a [color palette]. Include a [video or image details], showing the product in action. The caption should be [tone of voice], with a call-to-action encouraging followers to [specific action]."
+},
+{
+  "id": 18,
+  "category": "Marketing",
+  "prompt": "Develop a catchy slogan for a [product/service] that emphasizes [unique selling point]. The slogan should be memorable, concise, and resonate with [target audience]."
+},
+{
+  "id": 26,
+  "category": "Marketing",
+  "prompt": "Write a product description for an e-commerce listing of [product]. Focus on features like [key features], benefits, and why it stands out in the market. Use persuasive and clear language."
+},
+{
+  "id": 27,
+  "category": "Marketing",
+  "prompt": "Create a script for a 30-second promotional video for [product/service]. Highlight key benefits, include a strong call to action, and use a [tone] voice to engage viewers."
+},
+{
+  "id": 8,
+  "category": "Game Design",
+  "prompt": "Design a character for a fantasy RPG game. The character should be a [character role], with [physical characteristics] and [clothing/armor style]. The character’s weapon should be [weapon details], and the character’s backstory should involve [character backstory]. The personality should be [personality traits], and the character’s quest should involve [goal/mission]."
+},
+{
+  "id": 9,
+  "category": "Game Design",
+  "prompt": "Generate a map layout for a dungeon in a fantasy game. The dungeon should be set in [location/setting]. The entrance should be [entrance details], and inside, the dungeon should consist of [specific dungeon areas]. Include [special features], such as [traps, puzzles, or other elements]."
+},
+{
+  "id": 28,
+  "category": "Game Design",
+  "prompt": "Create a unique game mechanic for a [game genre] game. Describe how it works, the player interaction, and how it impacts gameplay and strategy."
+},
+{
+  "id": 29,
+  "category": "Game Design",
+  "prompt": "Design a boss fight encounter in a [game genre] game. Include the boss’s abilities, weaknesses, phases, and the environment where the fight takes place."
+},
+{
+  "id": 30,
+  "category": "Game Design",
+  "prompt": "Develop a storyline for an adventure game set in [setting]. Outline main characters, key plot points, and player choices that influence the narrative."
+},
+{
+  "id": 10,
+  "category": "Social Media",
+  "prompt": "Write an Instagram caption for a post about [topic]. The photo should show [visual description of photo]. The caption should evoke [specific emotion or mood], with a focus on [specific aspect]. Include a call-to-action encouraging followers to [engage with post]. Use hashtags like [relevant hashtags]."
+},
+{
+  "id": 11,
+  "category": "Social Media",
+  "prompt": "Create a TikTok script for a [type of video]. The video should feature [main activity], with [tone of voice] commentary. Include [specific actions or visual details], and use [music or sound effects]. The script should be [tone], with [specific video structure or style]."
+},
+{
+  "id": 22,
+  "category": "Social Media",
+  "prompt": "Generate creative social media content ideas for [platform] focused on the topic of [topic]. Use a [tone] tone (e.g., humorous, professional, casual). Suggest different content formats like posts, stories, or reels, and include catchy hashtags or calls to action."
+},
+{
+  "id": 31,
+  "category": "Social Media",
+  "prompt": "Write a Twitter thread about [topic], breaking down complex ideas into simple, engaging points. Use a [tone] voice and include relevant hashtags."
+},
+{
+  "id": 32,
+  "category": "Social Media",
+  "prompt": "Draft a LinkedIn post to share professional insights on [industry/topic]. Use a formal tone, include a call-to-action for networking or discussion, and highlight your expertise."
+},
+{
+  "id": 12,
+  "category": "Productivity",
+  "prompt": "Create a daily schedule for a [profession]. The day should start with a [morning activity] and then break down into [specific tasks]. Include [types of work] with regular breaks every [time interval]. In the afternoon, include time for [personal development or side projects]. End the day with a [wind-down activity] to clear the mind."
+},
+{
+  "id": 33,
+  "category": "Productivity",
+  "prompt": "Suggest productivity techniques for managing [type of work or project]. Include tools, methods, and time management tips tailored for [profession or personality type]."
+},
+{
+  "id": 34,
+  "category": "Productivity",
+  "prompt": "Outline a weekly planning template to balance work, personal life, and learning goals. Include sections for priorities, deadlines, and reflection."
+},
+{
+  "id": 35,
+  "category": "Productivity",
+  "prompt": "Describe strategies for overcoming procrastination specifically for [group or job type]. Include motivational tips and actionable steps."
+},
+{
+  "id": 36,
+  "category": "Productivity",
+  "prompt": "Create a morning routine checklist aimed at boosting energy and focus for [target group]. Include habits related to exercise, nutrition, and mental preparation."
+},
+{
+  "id": 19,
+  "category": "Education",
+  "prompt": "Write an essay on the topic of [topic]. The essay should be written in [language] and targeted at a [level] level (e.g., high school, undergraduate, advanced). Include an introduction, main arguments supported by examples, and a strong conclusion. Use a [tone] tone and ensure clarity and coherence throughout."
+},
+{
+  "id": 20,
+  "category": "Education",
+  "prompt": "Write an introduction section for a thesis on [thesis topic]. The introduction should be written in [language], be approximately [word count] words, and include background information, the research problem, objectives, and significance of the study. Use an academic and formal tone. Mention any relevant hypotheses or research questions."
+},
+{
+  "id": 21,
+  "category": "Education",
+  "prompt": "Find and summarize relevant academic sources on the topic of [research topic]. Focus on sources published after [year], preferably peer-reviewed journals or books. Include the main findings, methodologies, and gaps in the research. Present the summary in [language]."
+},
+{
+  "id": 37,
+  "category": "Education",
+  "prompt": "Design a lesson plan for teaching [subject] to [age group]. Include learning objectives, materials needed, activities, and assessment methods."
+},
+{
+  "id": 38,
+  "category": "Education",
+  "prompt": "Create a list of recommended books and resources for learning about [topic]. Include a brief description of each and its target audience."
+},
+{
+  "id": 23,
+  "category": "Programming",
+  "prompt": "Suggest a coding project idea suitable for a [skill level] developer using [programming language]. The project should be engaging and educational, including key features or challenges to implement. Provide a brief description of the project's goals and potential technologies to use."
+},
+{
+  "id": 39,
+  "category": "Programming",
+  "prompt": "Explain the concept of [programming concept] with examples in [programming language]. Include common use cases and potential pitfalls."
+},
+{
+  "id": 40,
+  "category": "Programming",
+  "prompt": "Write a step-by-step tutorial for building a simple [type of application] using [technology stack]. Include code snippets and explanations."
+},
+{
+  "id": 41,
+  "category": "Programming",
+  "prompt": "Create a list of best practices for writing clean and maintainable code in [programming language]. Include examples and explanations."
+},
+{
+  "id": 42,
+  "category": "Programming",
+  "prompt": "Design a small algorithmic challenge suitable for beginners in [programming language]. Provide the problem statement and a sample solution."
+},
+{
+  "id": 24,
+  "category": "Career",
+  "prompt": "Write a cover letter for a job application to [company name] for the position of [job title]. The letter should highlight relevant skills, experience, and motivation for applying. Use a professional tone and tailor the content to the company’s values and job requirements. The letter should be in [language]."
+},
+{
+  "id": 25,
+  "category": "Career",
+  "prompt": "Create a CV summary based on the following information: work experience in [industries or roles], educational background including degrees and certifications, notable projects such as [project names], and skills relevant to [target sector]. The summary should be concise, professional, and written in [language]."
+},
+{
+  "id": 43,
+  "category": "Career",
+  "prompt": "Write a professional LinkedIn summary highlighting your skills and experience in [industry]. Focus on achievements, career goals, and what sets you apart."
+},
+{
+  "id": 44,
+  "category": "Career",
+  "prompt": "Draft responses to common job interview questions for the position of [job title]. Include tips on what to emphasize and examples to share."
+},
+{
+  "id": 45,
+  "category": "Career",
+  "prompt": "Outline a career development plan for someone aiming to advance in [industry or role]. Include short-term and long-term goals, skills to acquire, and suggested actions."
+}
+]
+
+
