@@ -1,5 +1,4 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <div class="auth-container">
     <div class="card auth-card">
       <h3 class="text-center mb-4">Giriş Yap</h3>
@@ -13,7 +12,7 @@
         <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
       </form>
 
-      <button @click="loginWithGoogle" class="btn btn-danger w-100 mt-3">
+      <button @click="loginWithGoogle" class="btn btn-outline-danger w-100 mt-3">
         Google ile Giriş Yap
       </button>
 
@@ -72,13 +71,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 72px);
+  padding: 2.5rem 1rem;
 }
 
 .auth-card {
   padding: 2rem;
-  max-width: 400px;
+  max-width: 420px;
   width: 100%;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.08);
 }
 </style>
