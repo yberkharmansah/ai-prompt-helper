@@ -86,7 +86,7 @@
 
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="showCreateModal = false">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
+        <div class="modal-content p-4 create-modal">
           <h3>Yeni Prompt Oluştur</h3>
           <div class="mb-3">
             <label for="categorySelect" class="form-label">Kategori Seçin</label>
@@ -325,7 +325,8 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -348,6 +349,13 @@ export default {
   margin: 1.75rem auto;
   max-width: 900px;
   width: 90vw;
+}
+
+.create-modal {
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.12);
 }
 
 @media (max-width: 576px) {
