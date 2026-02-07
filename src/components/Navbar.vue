@@ -1,8 +1,7 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-      <router-link class="navbar-brand" to="/">PromptApp</router-link>
+      <router-link class="navbar-brand fw-semibold" to="/">PromptApp</router-link>
 
       <button
         class="navbar-toggler"
@@ -63,10 +62,3 @@ const logout = () => {
   userStore.logout();
 };
 </script>
-
-<style scoped>
-/* Responsive margin for body content to prevent navbar overlap */
-body {
-  padding-top: 70px;
-}
-</style>

@@ -1,5 +1,5 @@
 <script setup>
-import NavBar from './components/NavBar.vue';
+import Navbar from './components/Navbar.vue';
 import { useUserStore } from './stores/user';
 
 const userStore = useUserStore();
@@ -7,8 +7,10 @@ userStore.init();
 </script>
 
 <template>
-  <div>
-    <NavBar />
-    <router-view />
+  <div class="app-shell">
+    <Navbar />
+    <main class="app-main">
+      <router-view />
+    </main>
   </div>
 </template>

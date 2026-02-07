@@ -1,49 +1,56 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <div class="container py-4">
-
-    <div class="mb-4 d-flex justify-content-end">
+  <div class="container py-4 prompt-page">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+      <div>
+        <h1 class="h3 fw-bold mb-1">Prompt Kütüphanesi</h1>
+        <p class="text-muted mb-0">Kategorilerden seçim yapın, favorilerinizi yönetin ve kişisel promptlarınızı oluşturun.</p>
+      </div>
       <button type="button" class="btn btn-primary" @click="showCreateModal = true">
         Yeni Prompt Oluştur
       </button>
     </div>
 
-    <div v-if="!selectedCategory">
-      <h2>Kategori Seçin</h2>
-      <ul class="list-group">
-        <li
-          v-for="category in categories"
-          :key="category"
-          class="list-group-item list-group-item-action"
-          @click="selectedCategory = category"
-          style="cursor:pointer"
-        >
-          {{ category }}
-        </li>
-      </ul>
+    <div v-if="!selectedCategory" class="category-grid">
+      <div
+        v-for="category in categories"
+        :key="category"
+        class="category-card"
+        @click="selectedCategory = category"
+      >
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="text-uppercase text-muted small mb-1">Kategori</p>
+            <h2 class="h5 mb-0">{{ category }}</h2>
+          </div>
+          <span class="badge rounded-pill bg-primary-subtle text-primary">Seç</span>
+        </div>
+      </div>
     </div>
 
     <div v-else>
-      <button type="button" class="btn btn-link mb-3" @click="selectedCategory = null">← Kategorilere Dön</button>
-      <h2>{{ selectedCategory }} Prompts</h2>
-      <ul class="list-group">
-        <li
+      <button type="button" class="btn btn-link mb-3 px-0" @click="selectedCategory = null">← Kategorilere Dön</button>
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+        <h2 class="h4 mb-0">{{ selectedCategory }} Prompts</h2>
+        <span class="badge bg-light text-muted border">{{ filteredPrompts.length }} prompt</span>
+      </div>
+      <div class="list-group prompt-list">
+        <div
           v-for="prompt in filteredPrompts"
           :key="prompt.id"
-          class="list-group-item d-flex justify-content-between align-items-center"
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
         >
-          <span @click="openModal(prompt)" style="cursor:pointer;">
-            {{ prompt.prompt.length > 60 ? prompt.prompt.substring(0, 60) + '...' : prompt.prompt }}
-          </span>
+          <button class="btn btn-link text-start text-decoration-none flex-grow-1" @click="openModal(prompt)">
+            {{ prompt.prompt.length > 80 ? prompt.prompt.substring(0, 80) + '...' : prompt.prompt }}
+          </button>
           <button
             type="button"
-            class="btn btn-outline-warning btn-sm"
+            class="btn btn-outline-warning btn-sm ms-3"
             @click="toggleFavorite(prompt)"
           >
             {{ isFavorite(prompt.firebaseId || prompt.id) ? '★' : '☆' }}
           </button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <div v-if="showModal" class="modal fade show d-block" tabindex="-1" @click.self="closeModal">
@@ -70,7 +77,8 @@
             <pre class="bg-light p-3 rounded" style="white-space: pre-wrap;">{{ generatedPrompt }}</pre>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" @click="savePersonalPrompt">Kaydet (Kişisel)</button> <button type="button" class="btn btn-secondary" @click="closeModal">Kapat</button>
+            <button type="button" class="btn btn-success" @click="savePersonalPrompt">Kaydet (Kişisel)</button>
+            <button type="button" class="btn btn-secondary" @click="closeModal">Kapat</button>
           </div>
         </div>
       </div>
@@ -78,7 +86,7 @@
 
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="showCreateModal = false">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
+        <div class="modal-content p-4 create-modal">
           <h3>Yeni Prompt Oluştur</h3>
           <div class="mb-3">
             <label for="categorySelect" class="form-label">Kategori Seçin</label>
@@ -102,12 +110,12 @@
             ></textarea>
           </div>
           <div class="d-flex justify-content-end gap-2">
-            <button type="button" class="btn btn-primary" @click="createAndSaveNewUserPrompt">Oluştur</button> <button type="button" class="btn btn-secondary" @click="showCreateModal = false">İptal</button>
+            <button type="button" class="btn btn-primary" @click="createAndSaveNewUserPrompt">Oluştur</button>
+            <button type="button" class="btn btn-secondary" @click="showCreateModal = false">İptal</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -207,7 +215,7 @@ export default {
     },
     async toggleFavorite(prompt) {
       // firebaseId yoksa id'yi kullan (json'dan gelenler için)
-      const promptId = prompt.firebaseId || prompt.id; 
+      const promptId = prompt.firebaseId || prompt.id;
 
       if (!promptId) {
         console.error("Favori eklenirken/kaldırılırken prompt id eksik!", prompt);
@@ -226,7 +234,7 @@ export default {
         alert("Lütfen giriş yapınız. Prompt kaydetmek için oturum açmalısınız.");
         return;
       }
-      
+
       const finalPromptContent = this.generatedPrompt;
       const originalCategory = this.activePrompt ? this.activePrompt.category : "Genel"; // Orijinal prompt'un kategorisini de alabiliriz
 
@@ -260,7 +268,7 @@ export default {
         // userStore.userPrompts'ı da buraya ekleyebiliriz. Ancak, mevcut filteredPrompts
         // computed'ı userStore.userPrompts'ı zaten içeriyor.
         this.prompts = [...jsonPrompts, ...firestorePrompts];
-        
+
         console.log("Tüm promptlar yüklendi:", this.prompts);
       } catch (error) {
         console.error("Prompts çekilemedi:", error);
@@ -275,18 +283,56 @@ export default {
 </script>
 
 <style scoped>
+.prompt-page {
+  min-height: calc(100vh - 120px);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.category-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 1rem 2rem rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1.5rem 2.5rem rgba(15, 23, 42, 0.08);
+}
+
+.prompt-list .list-group-item {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 0.75rem 1.5rem rgba(15, 23, 42, 0.04);
+  margin-bottom: 0.75rem;
+}
+
+.prompt-list .list-group-item + .list-group-item {
+  margin-top: 0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1050;
 }
+
 .modal.d-block {
   display: block;
   background-color: rgba(0, 0, 0, 0.5);
@@ -298,11 +344,20 @@ export default {
   overflow-y: auto;
   z-index: 1050;
 }
+
 .modal-dialog {
   margin: 1.75rem auto;
   max-width: 900px;
   width: 90vw;
 }
+
+.create-modal {
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.12);
+}
+
 @media (max-width: 576px) {
   .modal-dialog {
     max-width: 95vw;
